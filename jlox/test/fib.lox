@@ -1,27 +1,10 @@
 fun fib(n) {
-  if (n <= 1) return n;
-  return fib(n - 2) + fib(n - 1);
+  if (n < 2) return n;
+  return fib(n - 1) + fib(n - 2); 
 }
 
 var t1 = clock();
-for (var i = 0; i < 20; i = i + 1) {
-  print fib(i), ""\;
-}
+println(fib(40));
 var t2 = clock();
 
-print "Fib1 took ", t2-t1, " seconds"\;
-
-var a = 0;
-var temp;
-var b = 1;
-
-var t1 = clock();
-for (var i = 0; i < 20; i++) {
-  print a, ""\;
-  temp = a;
-  a = b;
-  b = temp + b;
-}
-var t2 = clock();
-
-print "Fib2 took ", t2-t1, " seconds"\;
+print "Fib took ", t2-t1, " seconds"\;
