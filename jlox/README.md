@@ -1,7 +1,7 @@
 # Crafting Interpreters - JLox
 This is my implementation of the Lox language and JLox interpreter/transpiler based on the book ["Crafting Interpreters"](http://www.craftinginterpreters.com/).
 
-There are some differences between my implementation of the language, and the book Lox. I have added the following to the language:
+There are some differences between my implementation of the language, and the book Lox. I have added the following to the language, mainly based on book challenges, and my own desires:
 
 * Ternary operator support (`?:`)
 * Prefix increment/decrement and postfix increment/decrement operator support (`--`, `++`)

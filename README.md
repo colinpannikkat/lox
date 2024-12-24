@@ -1,2 +1,2 @@
 # Crafting Interpreters - Lox
-This is my implementation of the Lox language and JLox/CLox interpreters based on the book ["Crafting Interpreters"](http://www.craftinginterpreters.com/).
+This is my implementation of the Lox language and JLox/CLox interpreters based on the book ["Crafting Interpreters"](http://www.craftinginterpreters.com/) written by Robert Nystrom. Simply, Lox is a dynamically typed language, and although I agree with most of what Nystrom designed lox to do, my implementation is a superset of Lox with a few extra features I thought would be cool, and some from the challenges in the book.
