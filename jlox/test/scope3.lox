@@ -1,0 +1,7 @@
+fun scope(a) {
+    print a, ""\;
+    var b = "test";
+}
+
+var b = "Hello!";
+scope(b);

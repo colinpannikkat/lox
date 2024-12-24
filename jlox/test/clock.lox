@@ -1,0 +1,7 @@
+var x = clock();
+for (var i = 0; i < 10000000; i++) {
+    continue;
+}
+var y = clock();
+
+print y - x, " seconds"\;
