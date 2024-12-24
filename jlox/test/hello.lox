@@ -2,9 +2,5 @@ fun sayHi(first, last) {
   print "Hi, " + first + " " + last + "!"\;
 }
 
-fun println(string) {
-    print string,""\;
-}
-
 sayHi("Dear", "Reader");
 println(2);

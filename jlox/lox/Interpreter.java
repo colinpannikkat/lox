@@ -39,7 +39,7 @@ public class Interpreter implements Expr.Visitor<Object>,
            @Override
            public Object call(Interpreter interpreter,
                               List<Object> arguments) {
-                System.out.println(arguments.get(0));
+                System.out.println(stringify(arguments.get(0)));
                 return null;
             }
 
