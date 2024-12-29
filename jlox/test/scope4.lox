@@ -1,0 +1,17 @@
+var a = "global";
+{
+    println(a);
+    var a = "inner";
+    var b = println(a);
+    println(b);
+}
+
+{
+  fun showA() {
+    println(a);
+  }
+
+  showA();
+  var a = "block";
+  showA();
+}

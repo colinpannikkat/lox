@@ -4,12 +4,15 @@ import static lox.TokenType.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Interpreter implements Expr.Visitor<Object>,
                                     Stmt.Visitor<Void> {
 
     final Environment globals = new Environment();
     private Environment environment = globals;
+    private final Map<Expr, Integer> locals = new HashMap<>();
     private static Object uninitialized = new Object();
 
     private static class Break extends RuntimeException {}
@@ -40,7 +43,7 @@ public class Interpreter implements Expr.Visitor<Object>,
            public Object call(Interpreter interpreter,
                               List<Object> arguments) {
                 System.out.println(stringify(arguments.get(0)));
-                return null;
+                return this;
             }
 
             @Override
@@ -66,6 +69,13 @@ public class Interpreter implements Expr.Visitor<Object>,
     // Executor for statements
     private void execute(Stmt stmt) {
         stmt.accept(this);
+    }
+
+    // Variable resolution
+    // Tells interpreter the number of scopes between current and scope where
+    // the variable is defined
+    void resolve(Expr expr, int depth) {
+        locals.put(expr, depth);
     }
 
     /* Statement node visitors */
@@ -223,7 +233,17 @@ public class Interpreter implements Expr.Visitor<Object>,
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        Object value = environment.get(expr.name);
+        return lookUpVariable(expr.name, expr);
+    }
+
+    private Object lookUpVariable(Token name, Expr.Variable expr) {
+        Integer distance = locals.get(expr);
+        Object value = null;
+        if (distance != null) {
+            value = environment.getAt(distance, name.lexeme);
+        } else { 
+            value = globals.get(name);
+        }
         if (value == uninitialized) {
             throw new RuntimeError(expr.name, 
                 "'" + expr.name.lexeme + "' used without initialization.");
@@ -277,7 +297,9 @@ public class Interpreter implements Expr.Visitor<Object>,
         Object value = evaluate(expr.value);
         Object oldvalue = null;
         Token operator = expr.operator;
-        oldvalue = environment.get(expr.name);
+
+        Integer distance = locals.get(expr);
+        oldvalue = environment.getAt(distance, expr.name.lexeme);
 
         switch (operator.type) {
             /* Regular assignment */
@@ -301,7 +323,12 @@ public class Interpreter implements Expr.Visitor<Object>,
                 break;
         }
 
-        environment.assign(expr.name, value);
+        if (distance != null) {
+            environment.assignAt(distance, expr.name, value);
+        } else {
+            globals.assign(expr.name, value);
+        }
+        
         return value;
     }
 

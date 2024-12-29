@@ -1,7 +1,11 @@
+var b = "Hello!";
+
 fun scope(a) {
     print a, ""\;
-    var b = "test";
+    print b, ""\;
+    b = "test";
+    print a, ""\;
+    print b, ""\;
 }
 
-var b = "Hello!";
 scope(b);
