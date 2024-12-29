@@ -299,7 +299,11 @@ public class Interpreter implements Expr.Visitor<Object>,
         Token operator = expr.operator;
 
         Integer distance = locals.get(expr);
-        oldvalue = environment.getAt(distance, expr.name.lexeme);
+        if (distance != null) {
+            oldvalue = environment.getAt(distance, expr.name.lexeme);
+        } else {
+            oldvalue = globals.get(expr.name);
+        }
 
         switch (operator.type) {
             /* Regular assignment */
@@ -328,7 +332,7 @@ public class Interpreter implements Expr.Visitor<Object>,
         } else {
             globals.assign(expr.name, value);
         }
-        
+
         return value;
     }
 
